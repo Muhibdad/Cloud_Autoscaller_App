@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dispatcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dispatcher
+  template:
+    metadata:
+      labels:
+        app: dispatcher
+    spec:
+      containers:
+        - name: dispatcher
+          image: dispatcher:latest  # Use local image built inside Minikube
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9000

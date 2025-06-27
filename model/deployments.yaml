@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resnet-inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resnet
+  template:
+    metadata:
+      labels:
+        app: resnet
+    spec:
+      containers:
+        - name: resnet
+          image: resnet-inference:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "1"
+            limits:
+              cpu: "1"

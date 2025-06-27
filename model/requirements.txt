@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+requests
+prometheus_client
+
+pillow==10.1.0
+requests==2.32.3
+opencv-python==4.10.0.84
+aiohttp==3.9.5
+
+
+# PyTorch (CPU only) from official extra index
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.3.0+cpu
+torchvision==0.18.0+cpu
+

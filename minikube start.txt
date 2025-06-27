@@ -1,0 +1,21 @@
+minikube start
+eval $(minikube docker-env)
+
+
+docker build -t resnet-inference:latest .
+docker build -t dispatcher:latest .
+
+kubectl apply -f model/deployments.yaml
+kubectl apply -f model/services.yaml
+
+kubectl apply -f dispatcher/dispatcher-deployments.yaml
+kubectl apply -f dispatcher/dispatcher-services.yaml
+
+kubectl get pods
+kubectl get svc
+
+pyhton3 ____.py
+
+kubectl port-forward svc/prometheus-service 9090:9090
+python3 autoscaller.py
+python3 load_tester.py
