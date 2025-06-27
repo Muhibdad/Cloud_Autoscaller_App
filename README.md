@@ -15,7 +15,6 @@ This project implements a scalable image classification service using a ResNet18
 ├── prometheus/          # Prometheus config, deployment, service
 ├── images/              # Sample images used for testing
 ├── requirements.txt     # Python dependencies
-└── README.md            # This file
 ```
 
 ---
