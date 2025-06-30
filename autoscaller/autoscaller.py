@@ -27,7 +27,7 @@ def get_request_rate():
             print("ℹ️ No traffic yet.")
             return 0.0
     except Exception as e:
-        print("❌ Failed to get request rate from Prometheus:", e)
+        print(" Failed to get request rate from Prometheus:", e)
         return None
 
 def get_current_replicas():
@@ -35,18 +35,18 @@ def get_current_replicas():
         result = os.popen(f"kubectl get deployment {DEPLOYMENT_NAME} -n {NAMESPACE} -o jsonpath='{{.spec.replicas}}'").read()
         return int(result.strip())
     except Exception as e:
-        print("❌ Failed to get current replicas:", e)
+        print(" Failed to get current replicas:", e)
         return None
 
 def scale_to(replicas):
     try:
         os.system(f"kubectl scale deployment {DEPLOYMENT_NAME} --replicas={replicas} -n {NAMESPACE}")
-        print(f"✅ Scaled to {replicas} replicas.")
+        print(f" Scaled to {replicas} replicas.")
     except Exception as e:
-        print("❌ Failed to scale:", e)
+        print(" Failed to scale:", e)
 
 def autoscale():
-    print("🚀 Starting autoscaler...")
+    print(" Starting autoscaler...")
     while True:
         rate = get_request_rate()
         if rate is None:
@@ -64,7 +64,7 @@ def autoscale():
             print(f"🔄 Scaling from {current_replicas} to {desired_replicas} replicas...")
             scale_to(desired_replicas)
         else:
-            print(f"✅ Desired replicas ({desired_replicas}) already running.")
+            print(f" Desired replicas ({desired_replicas}) already running.")
 
         time.sleep(CHECK_INTERVAL)
 

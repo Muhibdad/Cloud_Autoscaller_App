@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: prometheus-service
 spec:
-  type: NodePort
+  type: LoadBalancer  # Change to NodePort if you prefer
   selector:
     app: prometheus
   ports:

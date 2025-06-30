@@ -1,4 +1,4 @@
-# ResNet Kubernetes Autoscaling Application 🧠🚀
+# ResNet Kubernetes Autoscaling Application 🧠
 
 This project implements a scalable image classification service using a ResNet18 model deployed on Kubernetes. It leverages FastAPI for serving inference, Prometheus for monitoring, and a custom Python-based autoscaler to adjust the number of model replicas based on incoming traffic.
 
@@ -19,7 +19,7 @@ This project implements a scalable image classification service using a ResNet18
 
 ---
 
-## 🚀 How to Run the Project (on Minikube via WSL Ubuntu)
+##  How to Run the Project (on Minikube via WSL Ubuntu)
 
 ### ⚙️ Requirements
 
@@ -133,7 +133,7 @@ It adjusts the number of replicas for the `resnet-inference` deployment dynamica
 
 ---
 
-## ✅ How to Reset After Reboot
+##  How to Reset After Reboot
 
 ```
 minikube start

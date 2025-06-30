@@ -20,6 +20,6 @@ spec:
             - containerPort: 8000
           resources:
             requests:
-              cpu: "1"
+              cpu: "256m"
             limits:
-              cpu: "1"
+              cpu: "512m"

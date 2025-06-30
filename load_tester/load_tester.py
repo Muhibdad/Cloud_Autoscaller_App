@@ -9,11 +9,11 @@ import threading
 IMAGE_FOLDER = "./images"
 ENQUEUE_URL = "http://192.168.49.2:31239/enqueue"
 RESULT_URL = "http://192.168.49.2:31239/result"
-POLL_INTERVAL = 1  # seconds between polling result
-MAX_WAIT_TIME = 20  # seconds to wait for result
-CONCURRENCY = 5  # Number of parallel threads
-REQUESTS_PER_THREAD = 20  # Requests per thread
-DELAY_BETWEEN_REQUESTS = 0.2  # seconds between requests per thread
+POLL_INTERVAL = 1
+MAX_WAIT_TIME = 20
+CONCURRENCY = 50            # more threads
+REQUESTS_PER_THREAD = 5      # more requests per thread
+DELAY_BETWEEN_REQUESTS = 0.1  # shorter delay
 # ==============
 
 def encode_random_image():
@@ -29,16 +29,17 @@ def send_request():
     for _ in range(REQUESTS_PER_THREAD):
         try:
             payload, filename = encode_random_image()
-            print(f"📤 Sending image: {filename}")
+            print(f" Sending image: {filename}")
+            # send_request_start = time.time()
             response = requests.post(ENQUEUE_URL, json=payload)
             if response.status_code != 200:
-                print("❌ Enqueue failed:", response.text)
+                print(" Enqueue failed:", response.text)
                 continue
 
             response_data = response.json()
             request_id = response_data.get("id")
             if not request_id:
-                print("❌ No request ID returned.")
+                print(" No request ID returned.")
                 continue
 
             start = time.time()
@@ -47,19 +48,19 @@ def send_request():
                 if result_resp.status_code == 200:
                     result_data = result_resp.json()
                     if "predictions" in result_data:
-                        print("✅ Prediction:", result_data["predictions"])
+                        print(" Prediction:", result_data["predictions"])
                         break
                 time.sleep(POLL_INTERVAL)
             else:
-                print("⏰ Timed out waiting for prediction.")
+                print(" Timed out waiting for prediction.")
 
         except Exception as e:
-            print("❌ Exception during request:", e)
+            print(" Exception during request:", e)
 
         time.sleep(DELAY_BETWEEN_REQUESTS)
 
 def main():
-    print(f"🚀 Starting load with {CONCURRENCY} threads...")
+    print(f" Starting load with {CONCURRENCY} threads...")
     threads = []
     for _ in range(CONCURRENCY):
         t = threading.Thread(target=send_request)
@@ -67,7 +68,7 @@ def main():
         threads.append(t)
     for t in threads:
         t.join()
-    print("✅ Load test complete.")
+    print(" Load test complete.")
 
 if __name__ == "__main__":
     main()
